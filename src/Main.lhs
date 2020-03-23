@@ -173,6 +173,8 @@ Text of abstract \ldots.
 
 > module Main where
 
+> main = undefined
+
 %endif
 
 %include Introduction.lhs
