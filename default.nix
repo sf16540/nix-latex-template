@@ -10,12 +10,23 @@ stdenv.mkDerivation {
                       scheme-small
 
                       # Add other LaTeX libraries (packages) here as needed, e.g:
-                      # stmaryrd amsmath pgf
+                      acmart
+                      cm-super
+                      comment
+                      environ
+                      lazylist
+                      ncctools
+                      polytable
+                      stmaryrd
+                      totpages
+                      trimspaces
+                      xstring
 
                       # build tools
                       latexmk
                       ;
                   })
+                  haskellPackages.lhs2tex
 
                 ];
   src = ./.;

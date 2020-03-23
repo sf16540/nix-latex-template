@@ -1,3 +1,5 @@
+export TEXINPUTS:=./src:${TEXINPUTS}
+
 ##
 ## Makefile for the document, based on:
 ##
@@ -10,11 +12,11 @@ DOCNAME = my-doc
 # You want latexmk to *always* run, because make does not have all the info.
 # Also, include non-file targets in .PHONY so they are run regardless of any
 # file of the given name existing.
-.PHONY: $(DOCNAME).pdf all clean
+.PHONY: build/$(DOCNAME).pdf all clean
 
 # The first rule in a Makefile is the one executed by default ("make"). It
 # should always be the "all" rule, so that "make" and "make all" are identical.
-all: $(DOCNAME).pdf
+all: build/$(DOCNAME).pdf
 
 ##
 ## CUSTOM BUILD RULES
@@ -31,15 +33,14 @@ all: $(DOCNAME).pdf
 # -interaction=nonstopmode keeps the pdflatex backend from stopping at a
 # missing file reference and interactively asking you for an alternative.
 
-$(DOCNAME).pdf: $(DOCNAME).tex
-	latexmk -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make $(DOCNAME).tex
+build/$(DOCNAME).pdf: build/Main.tex src/b.bib
+	latexmk -quiet -pdf -jobname=$(DOCNAME) -cd build/Main.tex
 
-watch: $(DOCNAME).tex
-	latexmk -pvc -pdf -pdflatex="pdflatex -interaction=nonstopmode" -use-make $(DOCNAME).tex
+build/Main.tex: src/Main.lhs src/format.fmt build
+	lhs2TeX -P src src/Main.lhs > build/Main.tex
+
+build:
+	mkdir build
 
 clean:
-	latexmk -CA
-
-install:
-	mkdir -pv ${out}/nix-support/
-	cp $(DOCNAME).pdf ${out}/
+	rm -rf build
