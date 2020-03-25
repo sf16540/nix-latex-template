@@ -33,7 +33,7 @@ all: build/$(DOCNAME).pdf
 # -interaction=nonstopmode keeps the pdflatex backend from stopping at a
 # missing file reference and interactively asking you for an alternative.
 
-build/$(DOCNAME).pdf: build/Main.tex src/b.bib
+build/$(DOCNAME).pdf: build/Main.tex src/references.bib
 	latexmk -quiet -pdf -jobname=$(DOCNAME) -cd build/Main.tex
 
 build/Main.tex: src/Main.lhs src/format.fmt build

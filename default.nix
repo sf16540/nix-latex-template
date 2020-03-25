@@ -27,7 +27,8 @@ stdenv.mkDerivation {
                       ;
                   })
                   haskellPackages.lhs2tex
-
+                  haskellPackages.cabal-install
+                  haskellPackages.ghcid
                 ];
   src = ./.;
   buildPhase = "make";
